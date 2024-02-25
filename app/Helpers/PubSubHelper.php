@@ -3,6 +3,7 @@
 namespace App\Helpers;
 
 use App\Models\Project;
+use Google\Cloud\PubSub\MessageBuilder;
 use Google\Cloud\PubSub\PubSubClient;
 
 class PubSubHelper
@@ -104,7 +105,7 @@ class PubSubHelper
     public function createSubscription($topic, $subscription)
     {
         try {
-            $gcSub = $this->topic($topic->topic)->subscription($subscription)->create();
+            $this->topic($topic->topic)->subscription($subscription)->create();
 
             return true;
         } catch (\Exception $e) {
@@ -128,5 +129,23 @@ class PubSubHelper
         return false;
 
     }
+    //endregion
+
+    //region Messages
+    public function publish($topic, $message)
+    {
+
+        try {
+            $this->client->topic($topic->topic)->publish((new MessageBuilder)->setData($message)->build());
+
+            return true;
+        } catch (\Exception $e) {
+
+        }
+
+        return false;
+
+    }
+
     //endregion
 }
