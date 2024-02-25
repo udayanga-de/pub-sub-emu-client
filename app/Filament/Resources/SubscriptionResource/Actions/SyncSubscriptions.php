@@ -7,7 +7,6 @@ use App\Models\Subscription;
 
 class SyncSubscriptions
 {
-
     public function sync($topic)
     {
         if (is_null($topic)) {
@@ -16,11 +15,10 @@ class SyncSubscriptions
 
         $subscriptions = [];
         try {
-            $subscriptions = PubSubHelper::fromProjectId($topic->project_id)->subscriptions() ;
+            $subscriptions = PubSubHelper::fromProjectId($topic->project_id)->subscriptions();
         } catch (\Exception $e) {
 
         }
-
 
         $gcSubs = [];
 
@@ -36,16 +34,15 @@ class SyncSubscriptions
             }
         }
 
-
-        $savedSubs = Subscription::where('topic_id', $topic->id)->pluck('subscription','id')->toArray();
+        $savedSubs = Subscription::where('topic_id', $topic->id)->pluck('subscription', 'id')->toArray();
 
         $syncSubscriptions = [];
         $unsyncSubscriptions = [];
-        foreach ($savedSubs as $id=> $savedSub) {
+        foreach ($savedSubs as $id => $savedSub) {
             if (array_key_exists($savedSub, $gcSubs)) {
                 $syncSubscriptions[] = $id;
                 unset($gcSubs[$savedSub]);
-            }else{
+            } else {
                 $unsyncSubscriptions[] = $id;
             }
         }
@@ -61,7 +58,7 @@ class SyncSubscriptions
             ];
         }
 
-        if (!empty($gcSubs)) {
+        if (! empty($gcSubs)) {
             Subscription::insert($newSubs);
         }
 

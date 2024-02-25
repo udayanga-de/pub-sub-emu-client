@@ -7,15 +7,15 @@ use Google\Cloud\PubSub\PubSubClient;
 
 class PubSubHelper
 {
-    protected Project|null $project;
+    protected ?Project $project;
+
     protected PubSubClient $client;
 
-    protected function __construct($project,$client)
+    protected function __construct($project, $client)
     {
         $this->project = $project;
         $this->client = $client;
     }
-
 
     public static function fromProject($project, $config = []): PubSubHelper
     {
@@ -33,11 +33,10 @@ class PubSubHelper
             putenv('PUBSUB_EMULATOR_HOST='.$project->emulator_host.':'.$project->emulator_port);
         }
 
-        $client= new PubSubClient($config);
+        $client = new PubSubClient($config);
         putenv('PUBSUB_EMULATOR_HOST='.$emulatorHost);
 
-       return new self($project, $client);
-
+        return new self($project, $client);
 
     }
 
@@ -52,53 +51,66 @@ class PubSubHelper
         return self::fromProject($project, $config);
     }
 
-    #region Topics
-    public function topics(){
+    //region Topics
+    public function topics()
+    {
         return $this->client->topics();
     }
 
-    public function topic($topic){
+    public function topic($topic)
+    {
         return $this->client->topic($topic);
     }
+
     public function createTopic($topic)
     {
         try {
-           $this->client->createTopic($topic);
+            $this->client->createTopic($topic);
+
             return true;
         } catch (\Exception $e) {
         }
+
         return false;
     }
-    public function deleteTopic($topic){
+
+    public function deleteTopic($topic)
+    {
 
         try {
             $gcTopic = $this->client->topic($topic->topic);
             $gcTopic->delete();
+
             return true;
         } catch (\Exception $e) {
 
         }
+
         return false;
     }
-    #endregion
+    //endregion
 
-
-    #region Subscriptions
-    public function subscriptions(){
+    //region Subscriptions
+    public function subscriptions()
+    {
         return $this->client->subscriptions();
     }
 
-    public function subscription($subscription){
+    public function subscription($subscription)
+    {
         return $this->client->subscription($subscription);
     }
+
     public function createSubscription($topic, $subscription)
     {
         try {
-            $gcSub =   $this->topic($topic->topic)->subscription($subscription)->create();
+            $gcSub = $this->topic($topic->topic)->subscription($subscription)->create();
+
             return true;
         } catch (\Exception $e) {
 
         }
+
         return false;
 
     }
@@ -107,6 +119,7 @@ class PubSubHelper
     {
         try {
             $this->client->subscription($subscription->subscription)->delete();
+
             return true;
         } catch (\Exception $e) {
 
@@ -115,5 +128,5 @@ class PubSubHelper
         return false;
 
     }
-    #endregion
+    //endregion
 }

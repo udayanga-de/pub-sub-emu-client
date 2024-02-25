@@ -41,6 +41,7 @@ class PullMessages
     public function pullById($subscriptionId)
     {
         $subscription = Subscription::find($subscriptionId);
+
         return $this->pull($subscription);
     }
 }

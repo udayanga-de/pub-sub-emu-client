@@ -4,7 +4,6 @@ namespace App\Filament\Resources\MessageResource\Pages;
 
 use App\Filament\Resources\MessageResource;
 use App\Filament\Resources\MessageResource\Actions\PullMessages;
-use App\Filament\Resources\MessageResource\Actions\SyncWithGC;
 use App\Filament\Resources\ProjectResource;
 use App\Filament\Resources\SubscriptionResource;
 use App\Filament\Resources\TopicResource;

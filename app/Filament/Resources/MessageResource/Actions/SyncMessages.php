@@ -8,16 +8,17 @@ use Illuminate\Support\Carbon;
 
 class SyncMessages
 {
-    public function syncOnly($subscription){
+    public function syncOnly($subscription)
+    {
         return $this->sync($subscription);
     }
 
-    public function syncAndAcknowledge($subscription){
-        return $this->sync($subscription,true);
+    public function syncAndAcknowledge($subscription)
+    {
+        return $this->sync($subscription, true);
     }
 
-
-    public function sync($subscription,$witAcknowledge = false)
+    public function sync($subscription, $witAcknowledge = false)
     {
         if (is_null($subscription)) {
             return false;
@@ -26,7 +27,7 @@ class SyncMessages
         $messages = [];
         $googleSubscription = null;
         try {
-            $googleSubscription= PubSubHelper::fromProjectId($subscription->project_id)->subscription($subscription->subscription);
+            $googleSubscription = PubSubHelper::fromProjectId($subscription->project_id)->subscription($subscription->subscription);
             $messages = $googleSubscription->pull();
         } catch (\Exception $e) {
 
@@ -39,7 +40,7 @@ class SyncMessages
 
         foreach ($messages as $message) {
             $acknowledged = false;
-            if($witAcknowledge){
+            if ($witAcknowledge) {
                 try {
                     $googleSubscription->acknowledge($message);
                     $acknowledged = true;
@@ -49,7 +50,7 @@ class SyncMessages
             }
 
             if ($savedMessage = $savedMessages->get($message->id())) {
-                if($acknowledged){
+                if ($acknowledged) {
                     $savedMessage->update([
                         'ack' => 1,
                         'ack_at' => now(),
@@ -74,14 +75,4 @@ class SyncMessages
 
         return true;
     }
-
-
-
-
-
-
-
-
-
-
 }

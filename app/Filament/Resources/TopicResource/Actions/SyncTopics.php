@@ -16,7 +16,7 @@ class SyncTopics
 
         }
 
-        $savedTopicIds = Topic::where('project_id', $project->id)->pluck('id','topic')->toArray();
+        $savedTopicIds = Topic::where('project_id', $project->id)->pluck('id', 'topic')->toArray();
         $savedTopics = array_keys($savedTopicIds);
 
         // Process new and existing topics
@@ -25,7 +25,7 @@ class SyncTopics
             $parts = explode('/', $topic->name());
             $gcTopic = array_pop($parts);
 
-            if (!in_array($gcTopic, $savedTopics)) {
+            if (! in_array($gcTopic, $savedTopics)) {
                 // If topic doesn't exist, create a new one
                 $topic = Topic::create([
                     'project_id' => $project->id,
@@ -33,7 +33,7 @@ class SyncTopics
                     'status' => 1,
                 ]);
                 $existingTopics[] = $topic->id;
-            }else{
+            } else {
                 $existingTopics[] = $savedTopicIds[$gcTopic];
             }
         }
@@ -43,7 +43,6 @@ class SyncTopics
             ->whereIn('topic', array_keys($existingTopics))
             ->update(['status' => 1]);
 
-
         // Update status for topics not found in the retrieved list
         Topic::where('project_id', $project->id)
             ->whereNotIn('topic', array_keys($existingTopics))
@@ -52,12 +51,4 @@ class SyncTopics
         return true;
 
     }
-
-
-
-
-
-
-
-
 }

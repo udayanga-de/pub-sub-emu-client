@@ -2,7 +2,6 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\TopicResource\Actions\DeleteGCTopic;
 use App\Filament\Resources\TopicResource\Pages;
 use App\Helpers\PubSubHelper;
 use App\Models\Project;

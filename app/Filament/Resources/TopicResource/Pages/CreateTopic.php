@@ -16,7 +16,7 @@ class CreateTopic extends CreateRecord
     {
         $project = Project::find($data['project_id']);
 
-        $topicCreated =PubSubHelper::fromProject($project)->createTopic( $data['topic']);
+        $topicCreated = PubSubHelper::fromProject($project)->createTopic($data['topic']);
         $data['status'] = $topicCreated ? 1 : 0;
 
         return $data;
