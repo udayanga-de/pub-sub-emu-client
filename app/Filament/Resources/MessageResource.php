@@ -80,10 +80,15 @@ class MessageResource extends Resource
     {
         $subscriptionId = request('subscription');
 
-        if (empty($subscriptionId)) {
+        $topicId = request('topic');
+
+        if (! empty($subscriptionId)) {
+            return parent::getEloquentQuery()->where('subscription_id', $subscriptionId);
+        } elseif (! empty($topicId)) {
+            return parent::getEloquentQuery()->where('topic_id', $topicId)->whereNotNull('subscription_id');
+        } else {
             return parent::getEloquentQuery()->whereNotNull('subscription_id');
         }
 
-        return parent::getEloquentQuery()->where('subscription_id', $subscriptionId);
     }
 }

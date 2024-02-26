@@ -31,7 +31,7 @@ class ProjectResource extends Resource
                     Toggle::make('is_local')->label('Runs In Local'),
                     TextInput::make('emulator_host')->label('Emulator Host'),
                     TextInput::make('emulator_port')->label('Emulator Port')->maxLength(5),
-                    TextInput::make('service_key')->label('Service Key Json'),
+                    TextInput::make('service_key')->label('Service Key Path'),
                 ]),
 
             ]);

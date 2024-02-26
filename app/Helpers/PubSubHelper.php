@@ -23,7 +23,7 @@ class PubSubHelper
 
         $defaultConfig = [
             'projectId' => $project->project_id,
-            // 'serviceDefinitionPath' => $project->service_account_key_file ?? env('GOOGLE_CLOUD_KEY_FILE'),
+            'serviceDefinitionPath' => $project->service_key ?? env('GOOGLE_CLOUD_KEY_FILE'),
         ];
 
         $config = array_merge($defaultConfig, $config);
@@ -35,6 +35,7 @@ class PubSubHelper
         }
 
         $client = new PubSubClient($config);
+
         putenv('PUBSUB_EMULATOR_HOST='.$emulatorHost);
 
         return new self($project, $client);

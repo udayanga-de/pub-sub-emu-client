@@ -1,66 +1,51 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Google PubSub Management UI
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+This project provides a simple user interface to manage Google Pub/Sub topics, subscriptions, and messages. It can interact with both Google Cloud Pub/Sub and the Pub/Sub emulator hosted in the local environment. The application is built on Laravel and utilizes Laravel Filament. You can modify the application as per your requirements.
 
-## About Laravel
+## Setting Up the Application
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+To run the application, ensure that you have PHP installed along with the PHP package manager Composer. Also, you need to have the database of your choice installed. Once everything is set and you have cloned the codebase, follow these steps:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+1. Run `composer install` command to install all the dependencies.
+2. Run `php artisan migrate --seed` to run migrations and create the user account.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Running the Application
 
-## Learning Laravel
+You can run the application in different ways:
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- If you have Valet installed, you can simply link the application using `valet link` command.
+- Alternatively, you can run `php artisan serve` command to start your local server.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+For more information about setting up and running a Laravel application, visit [Laravel Documentation](https://laravel.com/docs/10.x/installation).
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Setting Up Google Pub/Sub Emulator
 
-## Laravel Sponsors
+Google Pub/Sub emulator provides a simple and easy environment for developing and testing applications that interact with Google Pub/Sub. Follow these steps to set it up:
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+1. Visit [Google Pub/Sub Emulator Documentation](https://cloud.google.com/pubsub/docs/emulator) to get more information on how to install the Google Pub/Sub emulator.
+2. Once the emulator is in place, run `gcloud beta emulators pubsub start --project=PROJECT_ID` command to start your Pub/Sub emulator for the project PROJECT_ID. The default Pub/Sub URL would be `localhost:8085`, you can specify this if needed.
 
-### Premium Partners
+To interact with the Pub/Sub emulator, you need to have a service key. Follow these steps:
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+1. Generate the service key by running `gcloud auth application-default login` command.
 
-## Contributing
+## Connecting the Pub/Sub with the Application
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Once the application is set up and the Google Pub/Sub is running locally:
 
-## Code of Conduct
+1. Log in to the application using the default credentials:
+    - Username: `admin@example.com`
+    - Password: `password`
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+2. After login, create a project with the same PROJECT_ID used to start the Pub/Sub emulator.
+3. You can now interact with the Topics, Subscriptions, and messages via the application.
+4. If you need to have a default configuration for your Pub/Sub
+   - Set the `GOOGLE_CLOUD_KEY_FILE` in your `.env` file to the path of the generated key file.
+   - Set the `PUBSUB_EMULATOR_HOST` in your `.env` file to your local emulator path.
 
-## Security Vulnerabilities
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## Useful Links
 
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+- [Laravel](https://laravel.com/)
+- [Laravel Filament](hhttps://filamentphp.com/)
+- [Google PubSub](https://cloud.google.com/pubsub/)
