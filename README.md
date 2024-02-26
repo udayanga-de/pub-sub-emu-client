@@ -47,5 +47,5 @@ Once the application is set up and the Google Pub/Sub is running locally:
 ## Useful Links
 
 - [Laravel](https://laravel.com/)
-- [Laravel Filament](hhttps://filamentphp.com/)
+- [Laravel Filament](https://filamentphp.com/)
 - [Google PubSub](https://cloud.google.com/pubsub/)
