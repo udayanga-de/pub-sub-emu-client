@@ -21,9 +21,10 @@ class PubSubHelper
     public static function fromProject($project, $config = []): PubSubHelper
     {
 
+
         $defaultConfig = [
             'projectId' => $project->project_id,
-            'serviceDefinitionPath' => $project->service_key ?? env('GOOGLE_CLOUD_KEY_FILE'),
+            'keyFilePath' => $project->service_key ?? env('GOOGLE_CLOUD_KEY_FILE'),
         ];
 
         $config = array_merge($defaultConfig, $config);
