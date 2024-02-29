@@ -40,12 +40,12 @@ class SyncTopics
 
         // Update status for existing topics
         Topic::where('project_id', $project->id)
-            ->whereIn('id', array_keys($existingTopics))
+            ->whereIn('id', $existingTopics)
             ->update(['status' => 1]);
 
         // Update status for topics not found in the retrieved list
         Topic::where('project_id', $project->id)
-            ->whereNotIn('id', array_keys($existingTopics))
+            ->whereNotIn('id', $existingTopics)
             ->update(['status' => 0]);
 
         return true;
